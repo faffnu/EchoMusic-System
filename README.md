@@ -77,28 +77,28 @@
 
 ### 4.1 功能演示
 
-[视频](.\media\music.mp4)
+[视频](/media/music.mp4)
 
 ### 4.2 Nacos
 
 在nacos新建3个命名空间：dev、prod、test，将每个服务注册到 Nacos 的 dev 命名空间。
 
-![nacos1](.\media\nacos1.png)
+![nacos1](/media/nacos1.png)
 
 使用nacos统一配置管理，在配置管理public空间创建文件user_customer_sentinel.json，
 
 在dev空间创建文件application-dev.yaml、druid-common.yaml、redis-common.yaml。
 在文件中修改自己的mysql和redis相关配置内容。
 
-![img](.\media\nacos2.png) 
+![img](/media/nacos2.png) 
 
-![img](.\media\nacos3.png) 
+![img](/media/nacos3.png) 
 
  
 
 ###  4.3 Sentinel
 
-![img](.\media\sentinel.png) 
+![img](/media/sentinel.png) 
 
 ￼
 
@@ -106,11 +106,11 @@
 
 http://localhost:9001/swagger-ui/index.html
 
-![img](.\media\swagger1.png) 
+![img](/media/swagger1.png) 
 
 http://localhost:9002/swagger-ui/index.html
 
-![img](.\media\swagger2.png)
+![img](/media/swagger2.png)
 
  
 
@@ -124,5 +124,5 @@ http://localhost:9002/swagger-ui/index.html
 -Dskywalking.collector.backend_service=localhost:11800
 ```
 
-![img](.\media\skywalking.png) 
+![img](/media/skywalking.png) 
 
