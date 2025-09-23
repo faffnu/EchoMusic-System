@@ -77,7 +77,7 @@
 
 ### 4.1 功能演示
 
-[视频](/media/music.mp4)
+[视频]([/media/music.mp4](https://github.com/user-attachments/assets/415af009-5e1b-4baf-b1e4-88f9feb2e6dc))
 
 ### 4.2 Nacos
 
