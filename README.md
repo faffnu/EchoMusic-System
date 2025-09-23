@@ -2,14 +2,20 @@
 
 - [项目架构](#项目架构)
 - [主要模块功能](#主要模块功能)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-  - [Basic Usage](#basic-usage)
-  - [Advanced Usage](#advanced-usage)
-- [API Reference](#api-reference)
-- [Contributing](#contributing)
-- [License](#license)
+  - [用户模块](#用户模块)
+  - [音乐模块](#音乐模块)
+- [技术栈](#技术栈)
+  - [核心框架](#核心框架)
+  - [关键组件](#关键组件)
+  - [其他特性](#其他特性)
+  - [项目配置亮点](#项目配置亮点)
+- [系统演示](#系统演示)
+  - [功能演示](#功能演示)
+  - [Nacos](#nacos)
+  - [Sentinel](#sentinel)
+  - [Swagger文档](#swagger文档)
+  - [Skywalking链路追踪](#skywalking链路追踪)
+
 
 ## 项目架构
 
@@ -26,7 +32,7 @@
 
 ## 主要模块功能
 
-### 2.1 用户模块(user)
+### 用户模块
 - **功能**：
   - 用户登录/注册
   - 用户信息管理
@@ -39,7 +45,7 @@
   - `/provider/user/update`：更新用户信息
   - `/provider/user/changePassword`：修改密码
 
-### 2.2 音乐模块(music)
+### 音乐模块
 - **功能**：
   - 音乐搜索
   - 新歌推荐
@@ -55,14 +61,14 @@
   - `/provider/music/history`：播放历史相关
   - `/provider/music/insertLikeMusic`：收藏音乐
 
-## 3. 技术栈
+## 技术栈
 
-### 3.1 核心框架
+### 核心框架
 - **Spring Boot**：应用开发框架
 - **Spring Cloud**：微服务框架
 - **Spring Cloud Alibaba**：阿里云微服务解决方案
 
-### 3.2 关键组件
+### 关键组件
 - **Nacos**：服务注册与配置中心
 - **OpenFeign**：服务间调用
 - **Gateway**：API网关
@@ -71,26 +77,26 @@
 - **Redis**：缓存
 - **Druid**：数据库连接池
 
-### 3.3 其他特性
+### 其他特性
 - **统一响应**：使用ResultData封装响应结果
 - **全局异常处理**：GlobalExceptionHandler统一处理异常
 - **缓存支持**：使用Spring Cache注解实现缓存
 - **接口文档**：集成Swagger3生成API文档
 - **跨域处理**：Gateway中配置全局跨域
 
-### 3.4 项目配置亮点
+### 项目配置亮点
 - **多环境配置**：支持dev/test/prod多环境切换
 - **懒加载**：配置lazy-initialization优化启动速度
 - **熔断降级**：Feign整合Sentinel实现服务熔断
 - **负载均衡**：集成LoadBalancer实现负载均衡
 
-## 4. 系统演示
+## 系统演示
 
-### 4.1 功能演示
+### 功能演示
 
 https://github.com/user-attachments/assets/415af009-5e1b-4baf-b1e4-88f9feb2e6dc
 
-### 4.2 Nacos
+### Nacos
 
 在nacos新建3个命名空间：dev、prod、test，将每个服务注册到 Nacos 的 dev 命名空间。
 
@@ -107,13 +113,13 @@ https://github.com/user-attachments/assets/415af009-5e1b-4baf-b1e4-88f9feb2e6dc
 
  
 
-###  4.3 Sentinel
+###  Sentinel
 
 ![img](/media/sentinel.png) 
 
 
 
-### 4.4 Swagger文档
+### Swagger文档
 
 http://localhost:9001/swagger-ui/index.html
 
@@ -125,7 +131,7 @@ http://localhost:9002/swagger-ui/index.html
 
  
 
-### 4.5 Skywalking链路追踪
+### Skywalking链路追踪
 
 在每个服务启动之前，添加如下虚拟机选项。
 
