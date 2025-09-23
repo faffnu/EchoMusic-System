@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.PlayListMapper">
+    <!-- 按照播放量获取最高的5个歌单 -->
+    <select id="selectPlayListByPlayCount" resultType="com.fang.entity.dto.PlayListDTO">
+        SELECT `play_list_id`,
+               `music_user_id`,
+               `title`,
+               `title`,
+               `description`,
+               `play_list_cover`,
+               `create_time`,
+               `play_count`,
+               `play_list_type`
+        FROM `play_list`
+        ORDER BY `play_count` desc
+        limit 5;
+    </select>
+    <!-- 根据歌单id查询对应的歌曲信息 -->
+    <select id="selectSongMusicByPlayListId" parameterType="string" resultMap="songMusicDTO">
+        SELECT `song`.`song_music_id`,
+               `song`.`song_name`,
+               `song`.`cover_image`,
+               `song`.`song_url`,
+               `song`.`duration`,
+               `song`.`is_vip`,
+               `song`.`play_count`,
+               `song`.`is_new_music`,
+               `song`.`type`
+        FROM `song_music` `song`,
+             `song_and_play_list` `play_list`
+        WHERE `song`.`song_music_id` = `play_list`.`song_music_id`
+          AND `play_list`.`play_list_id` = #{play_list_id};
+    </select>
+    <resultMap id="songMusicDTO" type="com.fang.entity.dto.SongMusicDTO">
+        <result property="songMusicId" column="song_music_id"/>
+        <collection property="musicAndSingerList" ofType="com.fang.entity.dto.MusicAndSingerDTO"
+                    column="song_music_id" select="com.fang.mapper.MusicAndSingerMapper.selectByMusicId">
+            <id property="id" column="id"/>
+            <result property="singerId" column="singer_id"/>
+        </collection>
+    </resultMap>
+    <!-- 获取歌单类型 -->
+    <select id="selectPlayListByPlayListType" resultType="string">
+        select DISTINCT `play_list_type`
+        FROM `play_list`;
+    </select>
+    <!-- 根据歌单类型查询歌单,返回5条数据 -->
+    <select id="selectPlayListByTag" resultType="com.fang.entity.dto.PlayListDTO">
+        SELECT `play_list_id`,
+               `music_user_id`,
+               `title`,
+               `title`,
+               `description`,
+               `play_list_cover`,
+               `create_time`,
+               `play_count`,
+               `play_list_type`
+        FROM `play_list`
+        WHERE `play_list_type` = #{type}
+        limit 5;
+    </select>
+
+    <!-- 获得所有歌单 -->
+    <select id="selectPlayListAll" resultType="com.fang.entity.dto.PlayListDTO">
+        SELECT `play_list_id`,
+               `music_user_id`,
+               `title`,
+               `title`,
+               `description`,
+               `play_list_cover`,
+               `create_time`,
+               `play_count`,
+               `play_list_type`
+        FROM `play_list`;
+    </select>
+
+    <!-- 根据歌单id播放量加1 -->
+    <update id="updatePlayCountById" parameterType="string">
+        UPDATE `play_list`
+        SET `play_count` = `play_count` + 1
+        WHERE `play_list_id` = #{id};
+    </update>
+</mapper>

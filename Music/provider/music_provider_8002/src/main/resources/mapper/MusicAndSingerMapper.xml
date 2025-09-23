@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.MusicAndSingerMapper">
+    <select id="selectByMusicId" parameterType="string" resultMap="songMusic">
+        SELECT
+            `music_id`,`singer_id`
+        FROM `music_and_singer`
+        WHERE `music_id`=#{music_id};
+    </select>
+    <resultMap id="songMusic" type="com.fang.entity.dto.MusicAndSingerDTO">
+        <result column="id" property="id"/>
+        <result column="singer_id" property="singerId"/>
+        <collection property="singers" ofType="com.fang.entity.dto.MusicAndSingerDTO"
+                    column="singer_id" select="com.fang.mapper.SingerMapper.selectById">
+        </collection>
+    </resultMap>
+</mapper>

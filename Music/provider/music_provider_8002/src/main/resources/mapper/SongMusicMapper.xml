@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.SongMusicMapper">
+    <select id="selectSongMusicById" resultMap="songMusicDTOs">
+        SELECT DISTINCT `song`.`song_music_id`,
+                        `song`.`song_name`,
+                        `song`.`cover_image`,
+                        `song`.`song_url`,
+                        `song`.`duration`,
+                        `song`.`is_vip`,
+                        `song`.`play_count`,
+                        `song`.`is_new_music`,
+                        `song`.`type`
+        FROM `song_music` `song`,
+             `music_and_singer` `music_singer`
+        WHERE `song`.`song_music_id` = `music_singer`.`music_id`
+          AND `song`.`song_music_id` = #{music_id};
+    </select>
+    <!-- 根据music_id 查询对应的歌手 -->
+    <resultMap id="songMusicDTOs" type="com.fang.entity.dto.SongMusicDTO">
+        <result property="songMusicId" column="song_music_id"/>
+        <collection property="musicAndSingerList" ofType="com.fang.entity.dto.MusicAndSingerDTO"
+                     column="song_music_id" select="com.fang.mapper.MusicAndSingerMapper.selectByMusicId">
+            <id property="id" column="id"/>
+            <result property="singerId" column="singer_id"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据id字段是否为空 -->
+    <select id="selectMusicById" resultType="com.fang.entity.dto.SongMusicDTO">
+        SELECT `song_music_id`,`song_name`,
+                `cover_image`,`song_url`,
+                `duration`,`is_vip`,
+                `play_count`,`type`
+        FROM `song_music`
+        WHERE `song_music_id` = #{music_id};
+    </select>
+    <!-- 根据歌曲名进行搜索 -->
+    <select id="searchMusicByName" parameterType="string" resultMap="songMusicDTO">
+        SELECT
+            DISTINCT
+            `song`.`song_music_id`,`song`.`song_name`,
+            `song`.`cover_image`,`song`.`song_url`,
+            `song`.`duration`,`song`.`is_vip`,
+            `song`.`play_count`,`song`.`is_new_music`,
+            `song`.`type`
+        FROM `song_music` `song`,`music_and_singer` `music_singer`
+        WHERE `song`.`song_music_id` = `music_singer`.`music_id`
+        AND `song`.`song_name` LIKE CONCAT('%', #{music_name}, '%');
+    </select>
+
+    <!-- 根据music_id 查询对应的歌手 -->
+    <resultMap id="songMusicDTO" type="com.fang.entity.dto.SongMusicDTO">
+        <result property="songMusicId" column="song_music_id"/>
+        <collection property="musicAndSingerList" ofType="com.fang.entity.dto.MusicAndSingerDTO"
+                    column="song_music_id" select="com.fang.mapper.MusicAndSingerMapper.selectByMusicId">
+            <id property="id" column="id"/>
+            <result property="singerId" column="singer_id"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据id，播放量+1 -->
+    <update id="updatePlayCountById" parameterType="string">
+        UPDATE `song_music`
+        SET `play_count` = `play_count` + 1
+        WHERE `song_music_id` = #{id};
+    </update>
+
+    <!-- 查询所有新歌 -->
+    <select id="selectMusicByNewMusic" resultMap="songMusicDTO">
+        SELECT `song`.`song_music_id`,
+               `song`.`song_name`,
+               `song`.`cover_image`,
+               `song`.`song_url`,
+               `song`.`duration`,
+               `song`.`is_vip`,
+               `song`.`play_count`,
+               `song`.`is_new_music`,
+               `song`.`type`
+        FROM `song_music` `song`
+        WHERE `is_new_music` = 1;
+    </select>
+
+    <!-- 查询所有歌曲播放量大于50 -->
+    <select id="selectMusicByPlayCount" resultMap="songMusicDTO">
+        SELECT `song`.`song_music_id`,`song`.`song_name`,
+               `song`.`cover_image`,`song`.`song_url`,
+               `song`.`duration`,`song`.`is_vip`,
+               `song`.`play_count`,`song`.`is_new_music`,
+               `song`.`type`
+        FROM  `song_music` `song`
+        WHERE `play_count` > 50;
+    </select>
+
+    <!-- 获取所有歌手信息 -->
+    <select id="selectAllSingers" resultType="com.fang.entity.dto.SingerDTO">
+        SELECT DISTINCT
+            `singer_id` as singerId,
+            `singer_name` as singerName
+        FROM `singer`
+        ORDER BY `singer_name` DESC ;
+    </select>
+
+    <!-- 根据歌手ID获取该歌手的全部歌曲 -->
+    <select id="selectSongsBySingerId" parameterType="string" resultMap="songMusicDTO">
+        SELECT DISTINCT
+            `song`.`song_music_id`,
+            `song`.`song_name`,
+            `song`.`cover_image`,
+            `song`.`song_url`,
+            `song`.`duration`,
+            `song`.`is_vip`,
+            `song`.`play_count`,
+            `song`.`is_new_music`,
+            `song`.`type`
+        FROM `song_music` `song`
+                 INNER JOIN `music_and_singer` `mas` ON `song`.`song_music_id` = `mas`.`music_id`
+        WHERE `mas`.`singer_id` = #{singerId}
+        ORDER BY `song`.`play_count` DESC;
+    </select>
+</mapper>

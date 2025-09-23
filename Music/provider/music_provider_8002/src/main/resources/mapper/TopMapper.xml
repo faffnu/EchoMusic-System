@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.TopMapper">
+    <!-- 根据播放量查询榜单数据 -->
+    <select id="selectTop" resultType="com.fang.entity.dto.PlayListDTO">
+        SELECT `play_list`.`music_user_id`,
+               `play_list`.`play_list_id`,
+               `play_list`.`music_user_id`,
+               `play_list`.`title`,
+               `play_list`.`description`,
+               `play_list`.`play_list_cover`,
+               `play_list`.`play_list_type`,
+               `play_list`.`play_count`,
+               `play_list`.`create_time`
+        FROM `play_list`
+        ORDER BY `play_list`.play_count DESC
+        LIMIT 1;
+    </select>
+    <!-- 根据排行榜的作者id查询作者信息 -->
+    <!--    <resultMap id="TopAndUser" type="com.fang.entity.dto.PlayListDTO">-->
+    <!--        <id property="musicUserId" column="music_user_id"/>-->
+    <!--        &lt;!&ndash; 查询作者信息 &ndash;&gt;-->
+    <!--        <association property="musicUser" javaType="com.fang.entity.dto.PlayListDTO"-->
+    <!--                     column="music_user_id"-->
+    <!--                     select="com.fang.mapper.MusicUserMapper.selectMusicUserById">-->
+    <!--        </association>-->
+    <!--        &lt;!&ndash; 查询歌曲信息 &ndash;&gt;-->
+    <!--        <collection property="songMusicList" ofType="com.fang.entity.dto.PlayListDTO"-->
+    <!--                    column="song_music_id" select="com.fang.mapper.SongMusicMapper.selectSongMusicById">-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
+</mapper>

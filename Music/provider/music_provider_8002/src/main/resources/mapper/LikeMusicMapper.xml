@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.LikeMusicMapper">
+    <!-- 添加喜欢的音乐 -->
+    <insert id="insertLikeMusic" parameterType="com.fang.entity.dto.LikeMusicDTO">
+        INSERT INTO `like_music`
+        VALUES (#{likeMusicId}, #{songId}, #{userId}, #{likeTime});
+    </insert>
+    <!-- 根据用户id和歌曲id查询该歌曲是否被添加到我的喜欢列表当中 -->
+    <select id="selectLikeMusicByUserIdAndSongId" parameterType="string" resultType="com.fang.entity.dto.LikeMusicDTO">
+        SELECT `like_music_id`,
+               `song_id`,
+               `user_id`,
+               `like_time`
+        FROM `like_music`
+        WHERE `user_id` = #{user_id}
+        AND `song_id` = #{song_id};
+    </select>
+    <!-- 根据用户id查询喜欢的音乐 -->
+    <select id="selectLikeMusicByUserId" parameterType="string" resultType="com.fang.entity.dto.LikeMusicDTO">
+        SELECT DISTINCT `like`.`like_time`,
+                        `like`.`like_music_id`,
+                        `like`.`user_id`,
+                        `like`.`song_id`,
+                        `music`.`song_music_id`,
+                        `music`.`song_name`,
+                        `music`.`cover_image`,
+                        `music`.`song_url`,
+                        `music`.`duration`,
+                        `music`.`is_vip`,
+                        `music`.`play_count`
+        FROM `like_music` `like`,
+             `song_music` `music`
+        WHERE `like`.`song_id` = `music`.`song_music_id`
+          AND `like`.`user_id` = #{user_id};
+    </select>
+
+    <!-- 根据歌曲id和用户id删除一条记录 -->
+    <!--
+        flushCache: 是否一级缓存和二级缓存
+        timeout:设置超时时间
+    -->
+    <delete id="deleteLikeMusicByUserId" flushCache="true">
+        DELETE
+        FROM `like_music`
+        WHERE `user_id` = #{userId}
+        AND `song_id` = #{songId};
+    </delete>
+</mapper>

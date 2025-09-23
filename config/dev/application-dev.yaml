@@ -1,0 +1,12 @@
+spring:
+  mvc:
+    static-path-pattern: /static/** # 配置静态环境目录
+mybatis:
+  mapper-locations: classpath:mapper/*.xml # mapper映射文件
+  type-aliases-package: com.lazy.entity # 实体类
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名转换
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl # 开启日志
+logging:
+  level:
+    com.lazy: debug # 日志等级

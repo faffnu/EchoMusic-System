@@ -1,0 +1,4 @@
+logging:
+  level:
+    com.fang.apis: debug # 开启feign debug日志打印
+    com.alibaba.cloud.sentinel: debug

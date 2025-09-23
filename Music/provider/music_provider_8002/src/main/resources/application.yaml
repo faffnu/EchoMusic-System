@@ -1,0 +1,21 @@
+server:
+  port: 8002
+spring:
+  main:
+    lazy-initialization: true # 开启懒加载
+  profiles:
+    active: dev # 激活那个环境
+  application:
+    name: music-provider
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848 # nacos 服务地址和端口号
+      config:
+        namespace: ${spring.profiles.active} # 要读取 nacos 的配置,默认为dev环境
+      discovery:
+        namespace: dev
+# 开启熔断功能
+feign:
+  sentinel:
+    enabled: true
+gateway-url: http://127.0.0.1:80/${spring.application.name}

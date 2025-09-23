@@ -1,0 +1,31 @@
+server:
+  port: 9002
+spring:
+  profiles:
+    active: dev
+  main:
+    lazy-initialization: true # 开启懒加载
+  application:
+    name: music-customer
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848 # nacos 服务地址和端口号
+      config:
+        import-check:
+          enabled: false # 关闭检查
+        namespace: dev
+      discovery:
+        namespace: dev
+    # openFeign 配置
+    openfeign:
+      client:
+        config:
+          default:
+            read-timeout: 3000  # 默认读取时间
+            connect-timeout: 3000 # 默认连接时间
+# 开启熔断功能
+feign:
+  sentinel:
+    enabled: true
+
+gateway-url: http://localhost:80/${spring.application.name}

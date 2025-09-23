@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.SingerMapper">
+    <select id="selectById" resultType="com.fang.entity.dto.SingerDTO">
+        SELECT
+            `singer_id`,`singer_name`
+        FROM `singer`
+        WHERE `singer_id` = #{singerId};
+    </select>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.MusicUserMapper">
+    <select id="selectMusicUserById" resultType="com.fang.entity.dto.MusicUserDTO">
+        SELECT
+            `music_user_id`,`user_name`,
+            `avatar`,`bio`,
+            `is_vip`,`registration_date`
+        FROM `music_user`
+        WHERE `music_user_id`=#{music_id};
+    </select>
+</mapper>

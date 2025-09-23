@@ -1,0 +1,105 @@
+:root {
+    --bg-color: #f0f0f0;
+    --color: #0f0f0f;
+    --bg-dialog-color: #f5f5f5;
+    --odd-color: #efeded;
+    --text-color: #333;
+    --white: #fff;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--color);
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+/* 去除导航栏底部线 */
+.el-menu.el-menu--horizontal {
+    border: none !important;
+}
+.el-header,.el-menu,.el-card,
+.el-input__inner,.el-scrollbar__view,
+.el-autocomplete-suggestion__list,.el-scrollbar{
+    background-color: var(--bg-color) !important;
+    color: var(--color) !important;
+}
+.el-main{
+    overflow: hidden;
+    background: var(--bg-color) !important;
+    margin-bottom: 50px;
+}
+.el-header{
+    height: 100px !important;
+    padding: 0 !important;
+    border-bottom: 1px solid var(--odd-color) !important;
+}
+.el-menu-item:hover{
+    background: none !important;
+}
+.el-menu-item{
+    background: none !important;
+}
+.el-dialog{
+    background-color: var(--bg-dialog-color) !important;
+    color: var(--color) !important;
+}
+.hot-container{
+    background: var(--white);
+    border-radius: 15px;
+}
+/* 新碟上架专区 */
+.new-container{
+    background: var(--white);
+    border-radius: 15px;
+}
+.el-menu{
+    background: var(--white) !important;
+}
+/* 播放数量 */
+.play-count{
+    color: #d8d7d7;
+    background-color: #373535;
+}
+.footer-right{
+    color: #797979;
+}
+/* 底部区域歌手和音乐 */
+.footer-slider-item{
+    color: var(--bg-color);
+}
+/* 滚动条 */
+.el-slider__bar {
+    background-color: #FF641E;
+}
+.el-card{
+    background: var(--white) !important;
+}
+/* 新碟上架盒子 */
+.box{
+    background: #d5d2d2;
+}
+.box-content{
+    color:black !important;
+}
+/* 排行榜左侧区域悬浮显示背景颜色 */
+.topNarBar-container:hover{
+    background: rgb(230, 230, 230);
+}
+/* 排行榜table表格 */
+.bottom-content{
+    background-color: #f7f7f7;
+    border-top: 2px solid #c20c0c;
+}
+/* 设置阴影*/
+.el-card,.el-header,.el-header,
+.container,.hot-container,.new-container,.playlist-container
+,.navbar-container,.box,.container-message{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04) !important;
+}
+.i-color{
+    color: #837d7d;
+}

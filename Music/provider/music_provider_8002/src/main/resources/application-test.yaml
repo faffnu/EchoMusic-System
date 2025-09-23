@@ -1,0 +1,19 @@
+spring:
+  config:
+    import:
+      - nacos:druid-common.yaml?group=test&refreshEnable=true
+      - nacos:redis-common.yaml?group=test&refreshEnable=true
+      - nacos:application-dev.yaml?group=test&refreshEnable=true # spring 静态资源路径配置，mybatis配置
+    activate:
+      on-profile: test # 动态激活判断，如果当前是 dev 环境才会生效
+  # openFeign 配置
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            read-timeout: 3000  # 默认读取时间
+            connect-timeout: 3000 # 默认连接时间
+logging:
+  level:
+    com.fang.apis: debug # 开启feign debug日志打印

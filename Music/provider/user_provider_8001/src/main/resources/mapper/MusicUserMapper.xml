@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.MusicUserMapper">
+    <!-- 根据用户名和密码查询用户信息 -->
+    <select id="selectMusicUser" parameterType="string" resultType="com.fang.entity.dto.MusicUserDTO">
+        SELECT `music_user_id`,
+               `user_name`,
+               `password_hash`,
+               `account_status`,
+               `bio`,
+               `avatar`,
+               `is_vip`,
+               `registration_date`
+        FROM `music_user`
+        WHERE `user_name` = #{username}
+          AND `password_hash` = #{password};
+    </select>
+
+    <!-- 根据用户id查询用户信息 -->
+    <select id="selectMusicUserById" parameterType="string" resultType="com.fang.entity.dto.MusicUserDTO">
+        SELECT `music_user_id`,
+               `user_name`,
+               `password_hash`,
+               `account_status`,
+               `bio`,
+               `avatar`,
+               `is_vip`,
+               `registration_date`
+        FROM `music_user`
+        WHERE `music_user_id` = #{id};
+    </select>
+
+    <!-- 更新用户最后登录时间 -->
+    <update id="updateLatLoginMusicUser" parameterType="string">
+        UPDATE `music_user`
+        SET `last_login` = NOW()
+        WHERE `user_name` = #{username};
+    </update>
+
+    <!-- 插入新用户 -->
+    <insert id="insertMusicUser" parameterType="com.fang.entity.dto.MusicUserDTO">
+        INSERT INTO music_user (music_user_id, user_name, password_hash, bio, is_vip, registration_date)
+        VALUES (#{musicUserId}, #{userName}, #{passwordHash}, #{bio}, #{isVip}, NOW())
+    </insert>
+
+    <!-- 更新用户信息 -->
+    <update id="updateMusicUser" parameterType="com.fang.entity.dto.MusicUserDTO">
+        UPDATE music_user
+        <set>
+            <if test="bio != null">bio = #{bio},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="isVip != null">is_vip = #{isVip},</if>
+        </set>
+        WHERE music_user_id = #{musicUserId}
+    </update>
+
+    <!-- 更新密码 -->
+    <update id="updatePassword">
+        UPDATE music_user
+        SET password_hash = #{newPassword}
+        WHERE music_user_id = #{userId}
+    </update>
+
+    <!-- 根据用户名查询用户 -->
+    <select id="selectMusicUserByUsername" resultType="com.fang.entity.dto.MusicUserDTO">
+        SELECT * FROM music_user WHERE user_name = #{username}
+    </select>
+
+    <!-- 检查用户名是否存在 -->
+    <select id="existsByUsername" resultType="boolean">
+        SELECT COUNT(1) > 0 FROM music_user WHERE user_name = #{username}
+    </select>
+</mapper>

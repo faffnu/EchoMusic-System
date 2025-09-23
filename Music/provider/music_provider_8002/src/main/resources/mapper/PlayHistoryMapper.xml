@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.PlayHistoryMapper">
+
+    <!-- 根据用户id查询播放历史 -->
+    <select id="selectPlayHistoryByUserId" parameterType="string" resultType="com.fang.entity.dto.PlayHistoryDTO">
+        SELECT `id`, `song_id`, `user_id`
+        FROM `play_history`
+        WHERE `play_history`.`user_id` = #{user_id};
+    </select>
+
+    <!-- 查询用户和歌曲的播放记录 -->
+    <select id="selectByUserAndSong" resultType="com.fang.entity.dto.PlayHistoryDTO">
+        SELECT * FROM play_history
+        WHERE user_id = #{userId} AND song_id = #{songId}
+    </select>
+
+    <!-- 更新播放时间 -->
+    <update id="updatePlayTime" parameterType="com.fang.entity.dto.PlayHistoryDTO">
+        UPDATE play_history
+        SET play_time = #{playTime}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改插入语句，添加播放时间和播放次数 -->
+    <insert id="insertPlayHistory" parameterType="com.fang.entity.dto.PlayHistoryDTO">
+        INSERT INTO `play_history`(`id`, `song_id`, `user_id`, `play_time`)
+        VALUES (#{id}, #{songId}, #{userId}, #{playTime});
+    </insert>
+
+    <!-- 根据用户id和歌曲id删除一条记录 -->
+    <delete id="deletePlayHistoryByPlayHistoryVo" parameterType="com.fang.entity.vo.PlayHistoryVo"
+            flushCache="true">
+        DELETE
+        FROM `play_history`
+        WHERE `song_id` = #{songId}
+          AND `user_id` = #{userId};
+    </delete>
+</mapper>

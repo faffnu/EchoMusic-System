@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fang.mapper.NewMusicTypeMapper">
+    <!-- 根据新歌类型查询对应的歌曲和歌手,获得6条数据 -->
+    <select id="selectByType" resultType="com.fang.entity.dto.SongMusicDTO">
+        SELECT
+            `song`.`song_music_id`,`song`.`song_name`,
+            `song`.`cover_image`,`song`.`song_url`,
+            `song`.`duration`,`song`.`is_vip`,
+            `song`.`play_count`,`song`.`is_new_music`,
+            `song`.`type`
+        FROM `song_music` `song`
+        WHERE `song`.`type` = #{type}
+    </select>
+</mapper>
