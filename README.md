@@ -77,6 +77,13 @@
 - **Redis**：缓存
 - **Druid**：数据库连接池
 
+### 前端技术
+- **Vue.js**：前端框架
+- **Element UI**：UI组件库
+- **Vue Router**：路由管理
+- **Vuex**：状态管理
+- **Axios**：HTTP请求处理
+
 ### 其他特性
 - **统一响应**：使用ResultData封装响应结果
 - **全局异常处理**：GlobalExceptionHandler统一处理异常
