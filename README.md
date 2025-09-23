@@ -100,7 +100,7 @@
 
 ![img](/media/sentinel.png) 
 
-￼
+
 
 ### 4.4 Swagger文档
 
