@@ -1,6 +1,17 @@
 # 回声音乐系统
 
-## 1. 项目架构
+- [项目架构](#项目架构)
+- [主要模块功能](#主要模块功能)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Basic Usage](#basic-usage)
+  - [Advanced Usage](#advanced-usage)
+- [API Reference](#api-reference)
+- [Contributing](#contributing)
+- [License](#license)
+
+## 项目架构
 
 该项目采用典型的微服务架构，主要包含以下层次：
 
@@ -13,7 +24,7 @@
   - music_provider_8002：音乐服务提供者
 - **Model层(公共模块)**：存放实体类、DTO等公共代码
 
-## 2. 主要模块功能
+## 主要模块功能
 
 ### 2.1 用户模块(user)
 - **功能**：
