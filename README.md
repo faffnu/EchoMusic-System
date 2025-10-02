@@ -36,7 +36,7 @@
 - **熔断降级**: Sentinel
 - **数据库**: MySQL 8.x
 - **连接池**: Druid
-- **缓存**: Redis
+- **缓存**: Redis（集成 Spring Cache）
 - **ORM框架**: MyBatis
 - **API文档**: Swagger3
 - **工具类**: Hutool, Lombok
