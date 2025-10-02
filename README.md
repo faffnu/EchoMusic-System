@@ -1,15 +1,18 @@
 # 回声音乐系统
 
-- [项目架构](#项目架构)
-- [主要模块功能](#主要模块功能)
-  - [用户模块](#用户模块)
-  - [音乐模块](#音乐模块)
 - [技术栈](#技术栈)
-  - [核心框架](#核心框架)
-  - [关键组件](#关键组件)
-  - [前端技术](#前端技术)
-  - [其他特性](#其他特性)
-  - [项目配置亮点](#项目配置亮点)
+  - [后端技术栈](#后端技术栈)
+  - [前端技术栈](#前端技术栈)
+- [微服务架构](#微服务架构)
+  - [后端项目结构](#后端项目结构)
+  - [前端项目结构](#前端项目结构)
+  - [服务说明](#服务说明)
+  - [核心功能模块](#核心功能模块)
+  - [配置中心](#配置中心)
+- [项目特点](#项目特点)
+- [快速启动](#快速启动)
+  - [环境要求](#环境要求)
+  - [启动步骤](#启动步骤)
 - [系统演示](#系统演示)
   - [功能演示](#功能演示)
   - [Nacos](#nacos)
@@ -18,85 +21,212 @@
   - [Skywalking链路追踪](#skywalking链路追踪)
 
 
-## 项目架构
+# 回声音乐系统
 
-该项目采用典型的微服务架构，主要包含以下层次：
-
-- **Gateway层(网关)**：端口80，负责统一入口和路由转发
-- **Customer层(消费者)**：
-  - user_customer_9001：用户服务消费者
-  - music_customer_9002：音乐服务消费者
-- **Provider层(提供者)**：
-  - user_provider_8001：用户服务提供者
-  - music_provider_8002：音乐服务提供者
-- **Model层(公共模块)**：存放实体类、DTO等公共代码
-
-## 主要模块功能
-
-### 用户模块
-- **功能**：
-  - 用户登录/注册
-  - 用户信息管理
-  - 密码修改
-  - 用户状态管理
-
-- **主要接口**：
-  - `/provider/user/login`：用户登录
-  - `/provider/user/register`：用户注册
-  - `/provider/user/update`：更新用户信息
-  - `/provider/user/changePassword`：修改密码
-
-### 音乐模块
-- **功能**：
-  - 音乐搜索
-  - 新歌推荐
-  - 歌单管理
-  - 播放历史
-  - 收藏音乐
-  - 排行榜
-
-- **主要接口**：
-  - `/provider/music/search`：搜索音乐
-  - `/provider/music/newMusic`：获取新歌
-  - `/provider/music/playlist`：获取歌单
-  - `/provider/music/history`：播放历史相关
-  - `/provider/music/insertLikeMusic`：收藏音乐
+本项目是一个仿网易云的音乐平台，采用微服务架构设计，使用Spring Cloud Alibaba技术栈实现。系统包含用户认证、音乐管理、播放历史、收藏管理等核心功能。
 
 ## 技术栈
 
-### 核心框架
-- **Spring Boot**：应用开发框架
-- **Spring Cloud**：微服务框架
-- **Spring Cloud Alibaba**：阿里云微服务解决方案
+### 后端技术栈
+- **核心框架**: Spring Boot 3.x, Spring Cloud Alibaba
+- **注册中心**: Nacos
+- **网关**: Spring Cloud Gateway
+- **服务调用**: OpenFeign
+- **负载均衡**: Spring Cloud LoadBalancer
+- **熔断降级**: Sentinel
+- **数据库**: MySQL 8.x
+- **连接池**: Druid
+- **缓存**: Redis
+- **ORM框架**: MyBatis
+- **API文档**: Swagger3
+- **工具类**: Hutool, Lombok
+- **安全**: JWT, BCrypt
+- **构建工具**: Maven
 
-### 关键组件
-- **Nacos**：服务注册与配置中心
-- **OpenFeign**：服务间调用
-- **Gateway**：API网关
-- **Sentinel**：服务熔断和限流
-- **MyBatis**：ORM框架
-- **Redis**：缓存
-- **Druid**：数据库连接池
+### 前端技术栈
+- **核心框架**: Vue 2.x
+- **UI框架**: Element UI
+- **状态管理**: Vuex
+- **路由**: Vue Router
+- **HTTP客户端**: Axios
+- **音频播放**: APlayer
+- **构建工具**: Vue CLI
 
-### 前端技术
-- **Vue.js**：前端框架
-- **Element UI**：UI组件库
-- **Vue Router**：路由管理
-- **Vuex**：状态管理
-- **Axios**：HTTP请求处理
+## 微服务架构
 
-### 其他特性
-- **统一响应**：使用ResultData封装响应结果
-- **全局异常处理**：GlobalExceptionHandler统一处理异常
-- **缓存支持**：使用Spring Cache注解实现缓存
-- **接口文档**：集成Swagger3生成API文档
-- **跨域处理**：Gateway中配置全局跨域
+### 后端项目结构
 
-### 项目配置亮点
-- **多环境配置**：支持dev/test/prod多环境切换
-- **懒加载**：配置lazy-initialization优化启动速度
-- **熔断降级**：Feign整合Sentinel实现服务熔断
-- **负载均衡**：集成LoadBalancer实现负载均衡
+```
+Music/
+├── customer/              # 客户端服务（Controller层）
+│   ├── music_customer_9002/ # 音乐服务消费者
+│   │   ├── src/main/java/com/fang/
+│   │   │   ├── config/     # OpenFeign配置
+│   │   │   ├── controller/ # 控制器层
+│   │   │   ├── feign/      # Feign客户端接口
+│   │   │   └── service/    # 服务层
+│   │   └── pom.xml         # Maven配置文件
+│   └── user_customer_9001/ # 用户服务消费者
+│       ├── src/main/java/com/fang/
+│       │   ├── config/     # OpenFeign配置
+│       │   ├── controller/ # 控制器层
+│       │   ├── feign/      # Feign客户端接口
+│       │   ├── handler/    # 异常处理
+│       │   └── service/    # 服务层
+│       └── pom.xml         # Maven配置文件
+├── gateway/               # 网关服务
+│   ├── src/main/java/com/fang/
+│   │   ├── config/         # 网关配置
+│   │   └── GateWayApplication80.java # 网关启动类
+│   └── src/main/resources/
+│       └── application.yaml # 网关配置文件
+├── model/                 # 公共实体类和工具类
+│   ├── src/main/java/com/fang/
+│   │   ├── config/         # 配置类（Druid、Redis、Swagger）
+│   │   ├── entity/         # 实体类
+│   │   │   ├── dto/        # 数据传输对象
+│   │   │   └── vo/         # 视图对象
+│   │   ├── enums/          # 枚举类
+│   │   ├── exception/      # 异常处理
+│   │   ├── response/       # 统一响应
+│   │   ├── system/         # 系统配置
+│   │   └── utils/          # 工具类
+│   └── pom.xml             # Maven配置文件
+├── provider/              # 服务提供者（Service层）
+│   ├── music_provider_8002/ # 音乐服务提供者
+│   │   ├── src/main/java/com/fang/
+│   │   │   ├── config/     # 配置类
+│   │   │   ├── controller/ # 控制器层
+│   │   │   ├── feign/      # Feign客户端
+│   │   │   ├── mapper/     # 数据访问层
+│   │   │   └── service/    # 业务逻辑层
+│   │   └── src/main/resources/
+│   │       ├── mapper/     # MyBatis映射文件
+│   │       └── application.yaml # 应用配置
+│   └── user_provider_8001/ # 用户服务提供者
+│       ├── src/main/java/com/fang/
+│       │   ├── controller/ # 控制器层
+│       │   ├── mapper/     # 数据访问层
+│       │   └── service/    # 业务逻辑层
+│       └── src/main/resources/
+│           ├── mapper/     # MyBatis映射文件
+│           └── application.yaml # 应用配置
+└── pom.xml                # 根项目Maven配置
+```
+
+### 前端项目结构
+
+```
+vue/
+├── public/                 # 静态资源
+│   ├── theme/              # 主题文件
+│   └── index.html          # 入口HTML
+├── src/
+│   ├── axios/              # HTTP请求封装
+│   ├── components/         # 公共组件
+│   ├── eventBus/           # 事件总线
+│   ├── router/             # 路由配置
+│   ├── store/              # Vuex状态管理
+│   ├── views/              # 页面组件
+│   ├── App.vue             # 根组件
+│   └── main.js             # 入口文件
+└── package.json            # 依赖管理
+```
+
+### 服务说明
+
+| 服务名称 | 端口 | 说明 |
+|---------|------|------|
+| gateway | 80 | 网关服务 |
+| user-provider | 8001 | 用户服务提供者 |
+| music-provider | 8002 | 音乐服务提供者 |
+| user-customer | 9001 | 用户服务消费者 |
+| music-customer | 9002 | 音乐服务消费者 |
+
+### 核心功能模块
+
+1. **用户服务 (user-provider/user-customer)**
+   - 用户注册/登录
+   - 用户信息管理
+   - 密码修改
+   - JWT Token认证
+
+2. **音乐服务 (music-provider/music-customer)**
+   - 音乐播放
+   - 歌单管理
+   - 收藏管理
+   - 播放历史
+   - 音乐搜索
+   - 排行榜
+   - 歌手管理
+
+3. **网关服务 (gateway)**
+   - 路由转发
+   - 负载均衡
+   - 跨域处理
+   - 统一文档
+
+
+### 配置中心
+
+使用Nacos作为配置中心，支持多环境配置：
+
+- **dev**: 开发环境
+- **test**: 测试环境
+- **prod**: 生产环境
+
+
+## 项目特点
+
+1. **微服务架构**: 高内聚低耦合，便于维护和扩展
+2. **配置中心**: 统一配置管理，支持动态刷新
+3. **服务治理**: Nacos服务注册发现，Sentinel熔断降级
+4. **缓存优化**: Redis缓存热点数据，提升访问性能
+5. **安全机制**: JWT认证，BCrypt加密
+6. **前后端分离**: Vue前端，RESTful API
+7. **文档完善**: Swagger API文档，代码注释完整
+
+## 快速启动
+
+### 环境要求
+- JDK 17+
+- MySQL 8.x
+- Redis
+- Nacos 2.x
+- Sentinel Dashboard (可选)
+- Node.js 16+ (前端)
+
+### 启动步骤
+
+1. **启动基础设施**
+   ```bash
+   # 启动Nacos
+   startup.cmd -m standalone
+   
+   # 启动Redis
+   redis-server
+   ```
+
+2. **初始化数据库**
+   - 创建music数据库
+   - 执行数据库初始化脚本
+
+3. **启动后端服务**
+   ```bash
+   # 按顺序启动服务
+   cd gateway && mvn spring-boot:run
+   cd provider/user_provider_8001 && mvn spring-boot:run
+   cd provider/music_provider_8002 && mvn spring-boot:run
+   cd customer/user_customer_9001 && mvn spring-boot:run
+   cd customer/music_customer_9002 && mvn spring-boot:run
+   ```
+
+4. **启动前端**
+   ```bash
+   cd vue
+   npm install
+   npm run serve
+   ```
 
 ## 系统演示
 
