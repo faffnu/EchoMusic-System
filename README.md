@@ -34,7 +34,7 @@
 - **熔断降级**: Sentinel
 - **数据库**: MySQL 8.x
 - **连接池**: Druid
-- **缓存**: Redis（集成 Spring Cache）
+- **缓存**: Redis（配合 Spring Cache 注解使用）
 - **ORM框架**: MyBatis
 - **API文档**: Swagger3
 - **应用监控**: SkyWalking
