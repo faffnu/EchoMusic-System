@@ -37,6 +37,7 @@
 - **缓存**: Redis（集成 Spring Cache）
 - **ORM框架**: MyBatis
 - **API文档**: Swagger3
+- **应用监控**: SkyWalking
 - **工具类**: Hutool, Lombok
 - **安全**: JWT, BCrypt
 - **构建工具**: Maven
